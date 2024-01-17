@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/products/create">Them Moi</a>
+<a href="/products/soft">Sap Xep</a>
+<form action="/products/search">
+    <input type="text" name="search">
+    <button>Tim</button>
+</form>
+<form action="/products/search2">
+    <input type="text" name="search1">
+    <input type="text" name="search2">
+    <button>Tim</button>
+</form>
+<table style="border: solid 1px">
+    <tr>
+        <th>Count</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+
+    </tr>
+    <div th:each="item, count : ${page}">
+        <tr>
+            <td th:text="${count.count}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.getCategory().getName()}"></td>
+
+            <td><a th:href="@{/products/edit/__${item.id}__}">Edit</a></td>
+            <td><a th:href="@{/products/delete/__${item.id}__}">Delete</a></td>
+        </tr>
+    </div>
+    <div class="pagination">
+        <span>Page <span th:text="${page.number + 1}"></span> of <span th:text="${page.totalPages}"></span>.</span>
+        <span th:if="${page.hasPrevious()}">
+        <a th:href="@{/products?page=__${page.number - 1}__&size=__${page.size}__}">previous</a>
+    </span>
+        <span th:if="${page.hasNext()}">
+        <a th:href="@{/products?page=__${page.number + 1}__&size=__${page.size}__}">next</a>
+    </span>
+    </div>
+</table>
+</body>
+</html>
