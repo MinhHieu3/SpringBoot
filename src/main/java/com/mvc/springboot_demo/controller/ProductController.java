@@ -5,6 +5,7 @@ import com.mvc.springboot_demo.model.Product;
 import com.mvc.springboot_demo.repository.CategoryRepository;
 import com.mvc.springboot_demo.repository.ProductRepsitory;
 import com.mvc.springboot_demo.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,7 +45,7 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public String save(Product product) {
+    public String save(@Valid Product product) {
         productRepsitory.save(product);
         return "redirect:/products";
     }

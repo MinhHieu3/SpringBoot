@@ -1,13 +1,17 @@
 package com.mvc.springboot_demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Ban Phai Nhap Vao Ten")
     private String name;
+    @Min(value = 30, message ="nhap lon hon" )
     private double price;
     @ManyToOne
     private Category category;
