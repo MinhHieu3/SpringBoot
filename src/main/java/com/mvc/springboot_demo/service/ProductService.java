@@ -20,10 +20,10 @@ public class ProductService {
         Pageable pageable=  PageRequest.of(page,size);
         return productRepsitory.findByOrderByPrice(pageable);
     }
-    public Page<Product> getSearchByName(int page, int size, String name){
-        Pageable pageable=  PageRequest.of(page,size);
-        return productRepsitory.findProductByNameContaining(pageable,name);
-    }
+//    public Page<Product> getSearchByName(int page, int size, String name){
+//        Pageable pageable=  PageRequest.of(page,size);
+//        return productRepsitory.findProductByNameContaining(pageable,name);
+//    }
     public Page<Product> getSearchOrderByPrice(int page, int size, double start, double end){
         Pageable pageable=  PageRequest.of(page,size);
         return productRepsitory.findAllByPriceBetween(pageable,start,end);

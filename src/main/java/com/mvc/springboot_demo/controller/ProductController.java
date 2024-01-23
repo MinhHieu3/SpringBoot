@@ -65,12 +65,12 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/search")
-    public ModelAndView search(@RequestParam String search,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5")int size) {
-        ModelAndView modelAndView = new ModelAndView("product/list");
-        modelAndView.addObject("page",productService.getSearchByName(page,size,search));
-        return modelAndView;
-    }
+//    @GetMapping("/search")
+//    public ModelAndView search(@RequestParam String search,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5")int size) {
+//        ModelAndView modelAndView = new ModelAndView("product/list");
+//        modelAndView.addObject("page",productService.getSearchByName(page,size,search));
+//        return modelAndView;
+//    }
     @GetMapping("/search2")
     public ModelAndView searchPriceBetween(@RequestParam double search1,@RequestParam double search2,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size){
         ModelAndView modelAndView =new ModelAndView("product/list");
@@ -85,5 +85,6 @@ public class ProductController {
         modelAndView.addObject("page",productService.getSoftpage(page,size));
         return modelAndView;
     }
+
 
 }

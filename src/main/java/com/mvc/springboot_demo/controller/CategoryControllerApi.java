@@ -1,10 +1,11 @@
 package com.mvc.springboot_demo.controller;
 
+import com.mvc.springboot_demo.model.Category;
 import com.mvc.springboot_demo.model.Product;
+import com.mvc.springboot_demo.repository.CategoryRepository;
 import com.mvc.springboot_demo.repository.ProductRepsitory;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,19 +14,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")  //tất cả các hệ thống có thể truy cập được
-@RequestMapping("api/products")
-public class ProductControllerApi {
+@RequestMapping("api/categories")
+public class CategoryControllerApi {
     @Autowired
-    ProductRepsitory productRepsitory;
+    CategoryRepository categoryRepository;
 
 
     @GetMapping
     public ResponseEntity findAll() {
-        return new ResponseEntity<>(productRepsitory.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity save(@Valid  @RequestBody Product product ,BindingResult bindingResult ) {
+    public ResponseEntity save(@Valid @RequestBody Category category , BindingResult bindingResult ) {
         if (bindingResult.hasErrors()){
             String err="";
             for (ObjectError e:bindingResult.getAllErrors()){
@@ -33,28 +34,21 @@ public class ProductControllerApi {
             }
             return new ResponseEntity<>(err, HttpStatus.OK);
         }
-        return new ResponseEntity<>(productRepsitory.save(product), HttpStatus.OK);
+        return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.OK);
     }
     @PutMapping ("/{id}")
-    public ResponseEntity save(@RequestBody Product product , @PathVariable Long id) {
-        product.setId(id);
-        return new ResponseEntity<>(productRepsitory.save(product), HttpStatus.OK);
+    public ResponseEntity save(@RequestBody Category category , @PathVariable Long id) {
+        category.setId(id);
+        return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
-        productRepsitory.deleteById(id);
+        categoryRepository.deleteById(id);
         return new ResponseEntity<>("Delete done",HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity getOne(@PathVariable Long id){
-        return new ResponseEntity<>(productRepsitory.findById(id),HttpStatus.OK);
+        return new ResponseEntity<>(categoryRepository.findById(id),HttpStatus.OK);
     }
-    @GetMapping("search/{name}")
-    public ResponseEntity search( @PathVariable String name) {
-        return new ResponseEntity<>(productRepsitory.findProductByNameContaining(name), HttpStatus.OK);
-    }
-    @GetMapping("searchCate/{id}")
-    public ResponseEntity searchCate( @PathVariable Long id) {
-        return new ResponseEntity<>(productRepsitory.findProductByCategory_Id(id), HttpStatus.OK);
-    }
+
 }
